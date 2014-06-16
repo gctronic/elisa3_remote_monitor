@@ -3,6 +3,9 @@
 #ifdef _WIN32
     #include "windows.h"
 #endif
+#if defined(__linux__) || defined(__APPLE__)
+	#include <ncurses.h>
+#endif
 
 extern int robotAddress;
 extern unsigned int delayCounter;
@@ -12,13 +15,33 @@ extern char robRedLed, robGreenLed, robBlueLed;
 extern unsigned char robFlagsTx;
 extern unsigned char obstacleAvoid, cliffAvoid, irOn, tvOn, sleepOn, smallLedsOn;
 extern unsigned char exitProg;
+#if defined(__linux__) || defined(__APPLE__)
+int ch=0;
+#endif
 
 unsigned char HKeyPressed() {
+
+#ifdef _WIN32
     if(GetKeyState (0x48) < 0) {     // 'h'
         return 1;
     } else {
         return 0;
     }
+#endif
+
+#if defined(__linux__) || defined(__APPLE__)
+    ch = getch();
+    if (ch != ERR) {
+    	if(ch == 'h') {
+			return 1;
+        } else {
+			return 0;
+		}
+	} else {
+		return 0;
+	}
+#endif
+
 }
 
 void handleKeyboardInput() {
@@ -157,6 +180,146 @@ void handleKeyboardInput() {
 
         }
 
+#endif
+
+#if defined(__linux__) || defined(__APPLE__)
+        ch = getch();
+        if (ch != ERR) {
+            if(ch == KEY_LEFT) {
+				//printf("left\r\n");
+                robRSpeed = current_speed;
+                robLSpeed = 0;
+            } else if(ch == KEY_RIGHT) {
+				//printf("right\r\n");
+                robLSpeed = current_speed;
+                robRSpeed = 0;
+            } else if(ch == KEY_DOWN) {
+				//printf("down\r\n");
+                robLSpeed = -current_speed;
+                robRSpeed = -current_speed;
+            } else if(ch == KEY_UP) {
+				//printf("up\r\n");
+                robLSpeed = current_speed;
+                robRSpeed = current_speed;
+            } else if(ch == '+') {
+				//printf("+\r\n");
+                current_speed += 5;
+                if(current_speed > 100) {
+                    current_speed = 100;
+                }
+            } else if(ch == '-') {
+				//printf("-\r\n");
+                current_speed -= 5;
+                if(current_speed < -100) {
+                    current_speed = -100;
+                }
+            } else if (ch == ' ') {
+                current_speed = 0;
+                robRedLed = 0;
+                robGreenLed = 0;
+                robBlueLed = 0;
+                robFlagsTx = 0;
+                turnOffSmallLeds(robotAddress);
+                resetFlagTX(robotAddress);
+            } else if(ch == 'a') {
+                robLSpeed = -current_speed;
+                robRSpeed = current_speed;
+            } else if(ch == 's') {
+                robLSpeed = current_speed;
+                robRSpeed = -current_speed;
+            } else if(ch == 'r') {
+				robRedLed++;
+				if(robRedLed > 100) {
+					robRedLed = 100;
+				}
+            } else if(ch == 'e') {
+				robRedLed--;
+				if(robRedLed < 0) {
+					robRedLed = 0;
+				}
+            } else if(ch == 'g') {
+				robGreenLed++;
+				if(robGreenLed > 100) {
+					robGreenLed = 100;
+				}
+            } else if(ch == 'f') {
+				robGreenLed--;
+				if(robGreenLed < 0) {
+					robGreenLed = 0;
+				}
+            } else if(ch == 'b') {
+				robBlueLed++;
+				if(robBlueLed > 100) {
+					robBlueLed = 100;
+				}
+            } else if(ch == 'v') {
+				robBlueLed--;
+				if(robBlueLed < 0) {
+					robBlueLed = 0;
+				}
+            } else if(ch == 'u') {
+                if(tvOn) {
+                    tvOn = 0;
+                    disableTVRemote(robotAddress);
+                } else {
+                    tvOn = 1;
+                    enableTVRemote(robotAddress);
+                }
+            } else if(ch == 'i') {
+                if(irOn) {
+                    irOn = 0;
+                    turnOffAllIRs(robotAddress);
+                } else {
+                    irOn = 1;
+                    turnOnAllIRs(robotAddress);
+                }
+            } else if(ch == 'o') {
+                if(obstacleAvoid) {
+                    obstacleAvoid = 0;
+                    disableObstacleAvoidance(robotAddress);
+                } else {
+                    obstacleAvoid = 1;
+                    enableObstacleAvoidance(robotAddress);
+                }
+            } else if(ch == 'p') {
+                if(cliffAvoid) {
+                    cliffAvoid = 0;
+                    disableCliffAvoidance(robotAddress);
+                } else {
+                    cliffAvoid = 1;
+                    enableCliffAvoidance(robotAddress);
+                }
+            } else if(ch == 'j') {
+                if(sleepOn) {
+                    sleepOn = 0;
+                    disableSleep(robotAddress);
+                } else {
+                    sleepOn = 1;
+                    enableSleep(robotAddress);
+                }
+            } else if(ch == 'c') {
+                if(smallLedsOn) {
+                    smallLedsOn = 0;
+                    turnOffSmallLeds(robotAddress);
+                } else {
+                    smallLedsOn = 1;
+                    turnOnSmallLeds(robotAddress);
+                }
+            } else if(ch == 'k') {
+                calibrateSensors(robotAddress);
+            } else if(ch == 'l') {
+                startOdometryCalibration(robotAddress);
+            } else if(ch == 'h') {
+                printHelp();
+            } else if(ch == 'q') {
+                exitProg = 1;
+            } else {
+				//printf("pressed %c\r\n", ch);
+			}
+        } else {
+            robRSpeed = 0;
+            robLSpeed = 0;
+        }
 #endif
 
 }

@@ -7,11 +7,11 @@
 	<File name="input.h" open="1" top="0" tabpos="4">
 		<Cursor position="23" topLine="0" />
 	</File>
-	<File name="main.c" open="1" top="1" tabpos="1">
+	<File name="main.c" open="1" top="0" tabpos="1">
 		<Cursor position="146" topLine="3" />
 	</File>
-	<File name="terminal.c" open="1" top="0" tabpos="2">
-		<Cursor position="41" topLine="0" />
+	<File name="terminal.c" open="1" top="1" tabpos="2">
+		<Cursor position="4184" topLine="113" />
 	</File>
 	<File name="terminal.h" open="1" top="0" tabpos="5">
 		<Cursor position="90" topLine="0" />

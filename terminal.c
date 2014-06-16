@@ -4,6 +4,9 @@
 #ifdef _WIN32
     #include "windows.h"
 #endif
+#if defined(__linux__) || defined(__APPLE__)
+	#include <ncurses.h>
+#endif
 
 extern unsigned int robProx[8];
 extern unsigned int robProxAmb[8];
@@ -40,13 +43,18 @@ void printHelp() {
     system( "cls" );
 #endif
 
+#if defined(__linux__) || defined(__APPLE__)
+	clear();
+#endif
+
     while(1) {
 
-        if(HKeyPressed()) {
-            break;
-        }
 #ifdef _WIN32
         curPos(0,0);
+#endif
+
+#if defined(__linux__) || defined(__APPLE__)
+		refresh();
 #endif
 
         printf("************\n\r");
@@ -88,16 +96,41 @@ void printHelp() {
         printf("bit2: 0 = robot not charged; 1 = robot charged completely\n\r");
         printf("the remainig bits are not used\n\r");
 
+        if(HKeyPressed()) {
+            break;
+        }
+
     }
 
 #ifdef _WIN32
     system( "cls" );
 #endif
 
+#if defined(__linux__) || defined(__APPLE__)
+		refresh();
+#endif
+
 }
 
 void initTerminal() {
+#ifdef _WIN32
     system("mode 75, 60");
+#endif
+
+#if defined(__linux__) || defined(__APPLE__)
+    initscr();
+	keypad(stdscr,1);
+    cbreak();
+    noecho();
+    timeout(100); // non-blocking getch()
+#endif
+
+}
+
+void closeTerminal() {
+#if defined(__linux__) || defined(__APPLE__)
+	endwin();
+#endif
 }
 
 void printRobotInfo() {
@@ -105,53 +138,58 @@ void printRobotInfo() {
 #ifdef _WIN32
         curPos(0,0);
 #endif
+
+#if defined(__linux__) || defined(__APPLE__)
+		refresh();
+#endif
+
         printf("*****************************\n\r");
         printf("*** RECEPTION robot -> pc ***\t\tPress h for help\n\r");
         printf("*****************************\n\r");
         printf("PROXIMITY\r\n");
         printf("Prox0\t Prox1\t Prox2\t Prox3\t Prox4\t Prox5\t Prox6\t Prox7\r\n");
-        printf("%4d\t %4d\t %4d\t %4d\t %4d\t %4d\t %4d\t %4d\t\n\r\n", robProx[0], robProx[1], robProx[2], robProx[3], robProx[4], robProx[5], robProx[6], robProx[7]);
+        printf("%4d\t %4d\t %4d\t %4d\t %4d\t %4d\t %4d\t %4d\t\n\r", robProx[0], robProx[1], robProx[2], robProx[3], robProx[4], robProx[5], robProx[6], robProx[7]);
         printf("PROXIMITY AMBIENT\r\n");
         printf("Prox0\t Prox1\t Prox2\t Prox3\t Prox4\t Prox5\t Prox6\t Prox7\r\n");
-        printf("%4d\t %4d\t %4d\t %4d\t %4d\t %4d\t %4d\t %4d\t\n\r\n", robProxAmb[0], robProxAmb[1], robProxAmb[2], robProxAmb[3], robProxAmb[4], robProxAmb[5], robProxAmb[6], robProxAmb[7]);
+        printf("%4d\t %4d\t %4d\t %4d\t %4d\t %4d\t %4d\t %4d\t\n\r", robProxAmb[0], robProxAmb[1], robProxAmb[2], robProxAmb[3], robProxAmb[4], robProxAmb[5], robProxAmb[6], robProxAmb[7]);
         printf("GROUND\r\n");
         printf("ground0\t ground1\t ground2\t ground3\r\n");
-        printf("%4d\t %4d\t\t %4d\t\t %4d\t\n\r\n", robGround[0], robGround[1], robGround[2], robGround[3]);
+        printf("%4d\t %4d\t\t %4d\t\t %4d\t\n\r", robGround[0], robGround[1], robGround[2], robGround[3]);
         printf("GROUND AMBIENT\r\n");
         printf("ground0\t ground1\t ground2\t ground3\r\n");
-        printf("%4d\t %4d\t\t %4d\t\t %4d\t\n\r\n", robGroundAmb[0], robGroundAmb[1], robGroundAmb[2], robGroundAmb[3]);
+        printf("%4d\t %4d\t\t %4d\t\t %4d\t\n\r", robGroundAmb[0], robGroundAmb[1], robGroundAmb[2], robGroundAmb[3]);
         printf("ACCELEROMETER\r\n");
         printf("X:%4d\t Y:%4d\t Z:%4d\t\r\n", robAccX, robAccY, robAccZ);
-        printf("angle: %3d degrees (on vertical wall)\n\r\n", robVertAngle);
+        printf("angle: %3d degrees (on vertical wall)\n\r", robVertAngle);
         printf("BATTERY\r\n");
-        printf("adc: %4d (~%3d%%)\n\r\n", robBattLevel, robBattPercent);
+        printf("adc: %4d (~%3d%%)\n\r", robBattLevel, robBattPercent);
         printf("FLAGS\r\n");
         if(robFlagsRx==0) {
-            printf("0x00\n\r\n");
+            printf("0x00\n\r");
         } else {
-            printf("%#.2x\n\r\n", robFlagsRx);
+            printf("%#.2x\n\r", robFlagsRx);
         }
         printf("TV REMOTE\r\n");
-        printf("%.2d\n\r\n", robTvRemote);
+        printf("%.2d\n\r", robTvRemote);
         printf("SELECTOR\r\n");
-        printf("%.2d\n\r\n", robSelector);
+        printf("%.2d\n\r", robSelector);
         printf("MOTORS ENCODERS\r\n");
-        printf("l: %+.10ld r: %+.10ld\n\r\n", robLeftMotSteps, robRightMotSteps);
+        printf("l: %+.10ld r: %+.10ld\n\r", robLeftMotSteps, robRightMotSteps);
         printf("ODOMETRY\r\n");
         printf("X:%4d\t Y:%4d\t theta:%4d\t\r\n", robXPos, robYPos, robTheta);
         printf("****************************\n\r");
         printf("*** TRANSFER robot <- pc ***\n\r");
         printf("****************************\n\r");
 		printf("SPEED\r\n");
-		printf("speed to send: %+3d\t\n", current_speed);
-		printf("left: %+3d\t right: %+3d\t\n\r\n", robLSpeed, robRSpeed);
+		printf("speed to send: %+3d\t\r\n", current_speed);
+		printf("left: %+3d\t right: %+3d\t\n\r", robLSpeed, robRSpeed);
 		printf("RGB LEDS\r\n");
-		printf("r: %3d\t g: %3d\t b: %3d\t\n\r\n", robRedLed, robGreenLed, robBlueLed);
+		printf("r: %3d\t g: %3d\t b: %3d\t\n\r", robRedLed, robGreenLed, robBlueLed);
         printf("FLAGS\r\n");
         if(robFlagsTx==0) {
-            printf("0x00\n\r\n");
+            printf("0x00\n\r");
         } else {
-            printf("%#.2x\n\r\n", robFlagsTx);
+            printf("%#.2x\n\r", robFlagsTx);
         }
         printf("\nRF LINK QUALITY\r\n");
         printf("%6.2f %%\r\n", linkQualityToRob);

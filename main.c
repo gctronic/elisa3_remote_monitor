@@ -5,10 +5,6 @@
 #include "terminal.h"
 #include "input.h"
 
-#ifdef _WIN32
-    #include "windows.h"
-#endif
-
 // received from robot
 int robotAddress;
 unsigned int robProx[8] = {0};
@@ -86,6 +82,7 @@ int main(int argc, char *argv[]) {
     }
 
     closeRobotComm();
+	closeTerminal();
 
 	return 0;
 
