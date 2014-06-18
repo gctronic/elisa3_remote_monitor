@@ -7,7 +7,7 @@
 	#include <ncurses.h>
 #endif
 
-extern int robotAddress;
+extern int robotAddress[1];
 extern unsigned int delayCounter;
 extern char robLSpeed, robRSpeed;
 extern char current_speed;
@@ -79,8 +79,8 @@ void handleKeyboardInput() {
                 robGreenLed = 0;
                 robBlueLed = 0;
                 robFlagsTx = 0;
-                turnOffSmallLeds(robotAddress);
-                resetFlagTX(robotAddress);
+                turnOffSmallLeds(robotAddress[0]);
+                resetFlagTX(robotAddress[0]);
             } else if (GetKeyState (0x41) < 0) {    // 'a'
                 robLSpeed = -current_speed;
                 robRSpeed = current_speed;
@@ -120,55 +120,55 @@ void handleKeyboardInput() {
             } else if(GetKeyState (0x55) < 0) {     // 'u'
                 if(tvOn) {
                     tvOn = 0;
-                    disableTVRemote(robotAddress);
+                    disableTVRemote(robotAddress[0]);
                 } else {
                     tvOn = 1;
-                    enableTVRemote(robotAddress);
+                    enableTVRemote(robotAddress[0]);
                 }
             } else if (GetKeyState (0x49) < 0) {    // 'i'
                 if(irOn) {
                     irOn = 0;
-                    turnOffAllIRs(robotAddress);
+                    turnOffAllIRs(robotAddress[0]);
                 } else {
                     irOn = 1;
-                    turnOnAllIRs(robotAddress);
+                    turnOnAllIRs(robotAddress[0]);
                 }
             } else if(GetKeyState (0x4f) < 0) {     // 'o'
                 if(obstacleAvoid) {
                     obstacleAvoid = 0;
-                    disableObstacleAvoidance(robotAddress);
+                    disableObstacleAvoidance(robotAddress[0]);
                 } else {
                     obstacleAvoid = 1;
-                    enableObstacleAvoidance(robotAddress);
+                    enableObstacleAvoidance(robotAddress[0]);
                 }
             } else if(GetKeyState (0x50) < 0) {     // 'p'
                 if(cliffAvoid) {
                     cliffAvoid = 0;
-                    disableCliffAvoidance(robotAddress);
+                    disableCliffAvoidance(robotAddress[0]);
                 } else {
                     cliffAvoid = 1;
-                    enableCliffAvoidance(robotAddress);
+                    enableCliffAvoidance(robotAddress[0]);
                 }
             } else if(GetKeyState (0x4a) < 0) {     // 'j'
                 if(sleepOn) {
                     sleepOn = 0;
-                    disableSleep(robotAddress);
+                    disableSleep(robotAddress[0]);
                 } else {
                     sleepOn = 1;
-                    enableSleep(robotAddress);
+                    enableSleep(robotAddress[0]);
                 }
             } else if(GetKeyState (0x43) < 0) {     // 'c'
                 if(smallLedsOn) {
                     smallLedsOn = 0;
-                    turnOffSmallLeds(robotAddress);
+                    turnOffSmallLeds(robotAddress[0]);
                 } else {
                     smallLedsOn = 1;
-                    turnOnSmallLeds(robotAddress);
+                    turnOnSmallLeds(robotAddress[0]);
                 }
             } else if(GetKeyState (0x4b) < 0) {     // 'k'
-                calibrateSensors(robotAddress);
+                calibrateSensors(robotAddress[0]);
             } else if(GetKeyState (0x4c) < 0) {     // 'l'
-                startOdometryCalibration(robotAddress);
+                startOdometryCalibration(robotAddress[0]);
             } else if(GetKeyState (0x48) < 0) {     // 'h'
                 printHelp();
             } else if(GetKeyState (0x51) < 0) {     // 'q'
@@ -219,8 +219,8 @@ void handleKeyboardInput() {
                 robGreenLed = 0;
                 robBlueLed = 0;
                 robFlagsTx = 0;
-                turnOffSmallLeds(robotAddress);
-                resetFlagTX(robotAddress);
+                turnOffSmallLeds(robotAddress[0]);
+                resetFlagTX(robotAddress[0]);
             } else if(ch == 'a') {
                 robLSpeed = -current_speed;
                 robRSpeed = current_speed;
@@ -260,55 +260,55 @@ void handleKeyboardInput() {
             } else if(ch == 'u') {
                 if(tvOn) {
                     tvOn = 0;
-                    disableTVRemote(robotAddress);
+                    disableTVRemote(robotAddress[0]);
                 } else {
                     tvOn = 1;
-                    enableTVRemote(robotAddress);
+                    enableTVRemote(robotAddress[0]);
                 }
             } else if(ch == 'i') {
                 if(irOn) {
                     irOn = 0;
-                    turnOffAllIRs(robotAddress);
+                    turnOffAllIRs(robotAddress[0]);
                 } else {
                     irOn = 1;
-                    turnOnAllIRs(robotAddress);
+                    turnOnAllIRs(robotAddress[0]);
                 }
             } else if(ch == 'o') {
                 if(obstacleAvoid) {
                     obstacleAvoid = 0;
-                    disableObstacleAvoidance(robotAddress);
+                    disableObstacleAvoidance(robotAddress[0]);
                 } else {
                     obstacleAvoid = 1;
-                    enableObstacleAvoidance(robotAddress);
+                    enableObstacleAvoidance(robotAddress[0]);
                 }
             } else if(ch == 'p') {
                 if(cliffAvoid) {
                     cliffAvoid = 0;
-                    disableCliffAvoidance(robotAddress);
+                    disableCliffAvoidance(robotAddress[0]);
                 } else {
                     cliffAvoid = 1;
-                    enableCliffAvoidance(robotAddress);
+                    enableCliffAvoidance(robotAddress[0]);
                 }
             } else if(ch == 'j') {
                 if(sleepOn) {
                     sleepOn = 0;
-                    disableSleep(robotAddress);
+                    disableSleep(robotAddress[0]);
                 } else {
                     sleepOn = 1;
-                    enableSleep(robotAddress);
+                    enableSleep(robotAddress[0]);
                 }
             } else if(ch == 'c') {
                 if(smallLedsOn) {
                     smallLedsOn = 0;
-                    turnOffSmallLeds(robotAddress);
+                    turnOffSmallLeds(robotAddress[0]);
                 } else {
                     smallLedsOn = 1;
-                    turnOnSmallLeds(robotAddress);
+                    turnOnSmallLeds(robotAddress[0]);
                 }
             } else if(ch == 'k') {
-                calibrateSensors(robotAddress);
+                calibrateSensors(robotAddress[0]);
             } else if(ch == 'l') {
-                startOdometryCalibration(robotAddress);
+                startOdometryCalibration(robotAddress[0]);
             } else if(ch == 'h') {
                 printHelp();
             } else if(ch == 'q') {

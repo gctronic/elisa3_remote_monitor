@@ -6,7 +6,7 @@
 #include "input.h"
 
 // received from robot
-int robotAddress;
+int robotAddress[1];
 unsigned int robProx[8] = {0};
 unsigned int robProxAmb[8] = {0};
 unsigned int robGround[4] = {0};
@@ -34,54 +34,50 @@ unsigned char exitProg=0;
 int main(int argc, char *argv[]) {
 
     printf("\r\nInsert the robot address: ");
-    scanf("%d", &robotAddress);
+    scanf("%d", &robotAddress[0]);
 
     initTerminal();
 
-    // init the communication with the RF module and thus with the robot
-    openRobotComm();
-
-    // set the address of the robot to control; if more robots (max of 4 per packet) need to be controlled
-    // the function need to be called more times with different ids (0..3) and addresses
-    setRobotAddress(0, robotAddress);
+    // init the communication with the robots; set the addresses and number of the robots to control
+    startCommunication(robotAddress, 1);
 
     while(!exitProg) {
 
         handleKeyboardInput();
 
         // set new data for the robot (given from the user through the keyboard)
-        setLeftSpeed(robotAddress, robLSpeed);
-        setRightSpeed(robotAddress, robRSpeed);
-        setRed(robotAddress, robRedLed);
-        setBlue(robotAddress, robBlueLed);
-        setGreen(robotAddress, robGreenLed);
+        setLeftSpeed(robotAddress[0], robLSpeed);
+        setRightSpeed(robotAddress[0], robRSpeed);
+        setRed(robotAddress[0], robRedLed);
+        setBlue(robotAddress[0], robBlueLed);
+        setGreen(robotAddress[0], robGreenLed);
 
         // update sensors data received from the robot
-        robVertAngle = getVerticalAngle(robotAddress);
-        getAllProximity(robotAddress, robProx);
-        getAllProximityAmbient(robotAddress, robProxAmb);
-        getAllGround(robotAddress, robGround);
-        getAllGroundAmbient(robotAddress, robGroundAmb);
-        robBattLevel = getBatteryAdc(robotAddress);
-        robBattPercent = getBatteryPercent(robotAddress);
-        robAccX = getAccX(robotAddress);
-        robAccY = getAccY(robotAddress);
-        robAccZ = getAccZ(robotAddress);
-        robFlagsRx = getFlagTX(robotAddress, 0);
-        robTvRemote = getTVRemoteCommand(robotAddress);
-        robSelector = getSelector(robotAddress);
-        robLeftMotSteps = getLeftMotSteps(robotAddress);
-        robRightMotSteps = getRightMotSteps(robotAddress);
-        robXPos = getOdomXpos(robotAddress);
-        robYPos = getOdomXpos(robotAddress);
-        robTheta = getOdomTheta(robotAddress);
-        linkQualityToRob = getRFQuality(robotAddress);
+        robVertAngle = getVerticalAngle(robotAddress[0]);
+        getAllProximity(robotAddress[0], robProx);
+        getAllProximityAmbient(robotAddress[0], robProxAmb);
+        getAllGround(robotAddress[0], robGround);
+        getAllGroundAmbient(robotAddress[0], robGroundAmb);
+        robBattLevel = getBatteryAdc(robotAddress[0]);
+        robBattPercent = getBatteryPercent(robotAddress[0]);
+        robAccX = getAccX(robotAddress[0]);
+        robAccY = getAccY(robotAddress[0]);
+        robAccZ = getAccZ(robotAddress[0]);
+        robFlagsRx = getFlagTX(robotAddress[0], 0);
+        robTvRemote = getTVRemoteCommand(robotAddress[0]);
+        robSelector = getSelector(robotAddress[0]);
+        robLeftMotSteps = getLeftMotSteps(robotAddress[0]);
+        robRightMotSteps = getRightMotSteps(robotAddress[0]);
+        robXPos = getOdomXpos(robotAddress[0]);
+        robYPos = getOdomXpos(robotAddress[0]);
+        robTheta = getOdomTheta(robotAddress[0]);
+        linkQualityToRob = getRFQuality(robotAddress[0]);
 
         printRobotInfo();
 
     }
 
-    closeRobotComm();
+    stopCommunication();
 	closeTerminal();
 
 	return 0;
