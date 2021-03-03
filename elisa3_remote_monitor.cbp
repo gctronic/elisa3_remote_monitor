@@ -22,10 +22,10 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
-			<Add directory="../pc-side-elisa3-library" />
+			<Add directory="../elisa3_remote_library" />
 		</Compiler>
 		<Linker>
-			<Add library="../pc-side-elisa3-library/bin/Release/libpc-side-elisa3-library.a" />
+			<Add library="../elisa3_remote_library/bin/Release/libelisa3_remote_library.a" />
 			<Add directory="../pc-side-elisa3-library/bin/Release" />
 		</Linker>
 		<Unit filename="input.c">
