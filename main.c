@@ -4,6 +4,7 @@
 #include "elisa3-lib.h"
 #include "terminal.h"
 #include "input.h"
+#include <windows.h>
 
 // received from robot
 int robotAddress[1];

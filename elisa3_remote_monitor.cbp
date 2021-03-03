@@ -2,7 +2,7 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="pc-side-elisa3-1-robot" />
+		<Option title="elisa3_remote_monitor" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
@@ -25,7 +25,7 @@
 			<Add directory="../pc-side-elisa3-library" />
 		</Compiler>
 		<Linker>
-			<Add library="libpc-side-elisa3-library.a" />
+			<Add library="../pc-side-elisa3-library/bin/Release/libpc-side-elisa3-library.a" />
 			<Add directory="../pc-side-elisa3-library/bin/Release" />
 		</Linker>
 		<Unit filename="input.c">
