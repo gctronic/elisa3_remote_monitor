@@ -1,0 +1,38 @@
+# depslib dependency file v1.0
+1722238984 source:e:\gctronic\elisa-3\elisa3_remote_monitor\input.c
+	"input.h"
+	"terminal.h"
+	"windows.h"
+	<ncurses.h>
+
+1614760959 e:\gctronic\elisa-3\elisa3_remote_monitor\input.h
+	"elisa3-lib.h"
+
+1731333046 e:\gctronic\elisa-3\elisa3_remote_library\elisa3-lib.h
+	<stdio.h>
+	<sys/types.h>
+	<math.h>
+	<unistd.h>
+	"usb-comm.h"
+
+1722238554 e:\gctronic\elisa-3\elisa3_remote_library\usb-comm.h
+	<stdio.h>
+
+1614760959 e:\gctronic\elisa-3\elisa3_remote_monitor\terminal.h
+
+1731333354 source:e:\gctronic\elisa-3\elisa3_remote_monitor\main.c
+	<stdio.h>
+	<sys/types.h>
+	<math.h>
+	"elisa3-lib.h"
+	"terminal.h"
+	"input.h"
+	<windows.h>
+
+1731333349 source:e:\gctronic\elisa-3\elisa3_remote_monitor\terminal.c
+	"terminal.h"
+	"input.h"
+	<stdio.h>
+	"windows.h"
+	<ncurses.h>
+

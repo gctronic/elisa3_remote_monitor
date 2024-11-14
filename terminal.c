@@ -13,17 +13,19 @@ extern unsigned int robProxAmb[8];
 extern unsigned int robGround[4];
 extern unsigned int robGroundAmb[4];
 extern signed int robAccX, robAccY, robAccZ;
+extern signed int robGyroZ;
 extern unsigned int robBattLevel;
 extern unsigned int robBattPercent;
 extern int robVertAngle;
 extern unsigned char robSelector, robTvRemote, robFlagsRx;
 extern signed long int robLeftMotSteps, robRightMotSteps;
-extern signed int robTheta, robXPos, robYPos;
+extern signed int rTheta, rXPos, rYPos;
 extern char current_speed;
 extern char robLSpeed, robRSpeed;
 extern char robRedLed, robGreenLed, robBlueLed;
 extern unsigned char robFlagsTx;
 extern double linkQualityToRob;
+extern signed int robHeading;
 
 #ifdef _WIN32
 void curPos(int x, int y) {
@@ -158,8 +160,10 @@ void printRobotInfo() {
         printf("GROUND AMBIENT\r\n");
         printf("ground0\t ground1\t ground2\t ground3\r\n");
         printf("%4d\t %4d\t\t %4d\t\t %4d\t\n\r", robGroundAmb[0], robGroundAmb[1], robGroundAmb[2], robGroundAmb[3]);
-        printf("ACCELEROMETER\r\n");
-        printf("X:%4d\t Y:%4d\t Z:%4d\t\r\n", robAccX, robAccY, robAccZ);
+        printf("IMU\r\n");
+        printf("Acc: X:%+06d\t Y:%+06d\t Z:%+06d\t\r\n", robAccX, robAccY, robAccZ);
+        printf("Gyro: Z:%+06d\t\r\n", robGyroZ);
+        printf("Heading: %03d\t\r\n", robHeading);
         printf("angle: %3d degrees (on vertical wall)\n\r", robVertAngle);
         printf("BATTERY\r\n");
         printf("adc: %4d (~%3d%%)\n\r", robBattLevel, robBattPercent);
@@ -176,7 +180,7 @@ void printRobotInfo() {
         printf("MOTORS ENCODERS\r\n");
         printf("l: %+.10ld r: %+.10ld\n\r", robLeftMotSteps, robRightMotSteps);
         printf("ODOMETRY\r\n");
-        printf("X:%4d\t Y:%4d\t theta:%4d\t\r\n", robXPos, robYPos, robTheta);
+        printf("X:%4d\t Y:%4d\t theta:%4d\t\r\n", rXPos, rYPos, rTheta);
         printf("****************************\n\r");
         printf("*** TRANSFER robot <- pc ***\n\r");
         printf("****************************\n\r");
