@@ -13,7 +13,7 @@ extern unsigned int robProxAmb[8];
 extern unsigned int robGround[4];
 extern unsigned int robGroundAmb[4];
 extern signed int robAccX, robAccY, robAccZ;
-extern signed int robGyroZ;
+extern double robGyroZ;
 extern unsigned int robBattLevel;
 extern unsigned int robBattPercent;
 extern int robVertAngle;
@@ -162,7 +162,7 @@ void printRobotInfo() {
         printf("%4d\t %4d\t\t %4d\t\t %4d\t\n\r", robGroundAmb[0], robGroundAmb[1], robGroundAmb[2], robGroundAmb[3]);
         printf("IMU\r\n");
         printf("Acc: X:%+06d\t Y:%+06d\t Z:%+06d\t\r\n", robAccX, robAccY, robAccZ);
-        printf("Gyro: Z:%+06d\t\r\n", robGyroZ);
+        printf("Gyro: Z:%+7.2f dps\t\r\n", robGyroZ);
         printf("Heading: %03d\t\r\n", robHeading);
         printf("angle: %3d degrees (on vertical wall)\n\r", robVertAngle);
         printf("BATTERY\r\n");

@@ -22,7 +22,7 @@ unsigned char robSelector=0, robTvRemote=0, robFlagsRx=0;
 signed long int robLeftMotSteps=0, robRightMotSteps=0;
 signed int rTheta=0, rXPos=0, rYPos=0;
 double linkQualityToRob=0;
-signed int robGyroZ=0;
+double robGyroZ=0;
 signed int robHeading=0;
 
 // sent to robot
@@ -78,7 +78,7 @@ int main(int argc, char *argv[]) {
         robLeftMotSteps = getLeftMotSteps(robAddress[0]);
         robRightMotSteps = getRightMotSteps(robAddress[0]);
         rXPos = getOdomXpos(robAddress[0]);
-        rYPos = getOdomXpos(robAddress[0]);
+        rYPos = getOdomYpos(robAddress[0]);
         rTheta = getOdomTheta(robAddress[0]);
         linkQualityToRob = getRFQuality(robAddress[0]);
         robGyroZ = getGyroZ(robAddress[0]);
